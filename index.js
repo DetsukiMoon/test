@@ -103,9 +103,13 @@ ___________           __   .__
     });
 
     ws.on('close', () => {
-        if (ws.clientId) {
-            delete clients[ws.clientId];
-            logMessage(`Client ${ws.clientId} disconnected`);
+        try {
+            if (ws.clientId) {
+                delete clients[ws.clientId];
+                logMessage(`Client ${ws.clientId} disconnected`);
+            }
+        } catch (error) {
+            logMessage(`Error handling client disconnection: ${error.message}`);
         }
     });
 });
